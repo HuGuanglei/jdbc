@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+ "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+
+<hibernate-mapping>
+	<class name="com.guanglei.entity.CheckoutMaster2" table="master_checkout">
+
+	<id name="id" type="int" column="transaction_id">
+		<generator class="native"/>
+	</id>	
+	<property name="cashierName" column="cashier_name" type="string" />
+	<property name="totalAmount" column="total_amount" type="int" />
+	<property name="transactionDateTime" column="transaction_date_time" type="string" />
+	<property name="totalAmountConsumer" column="total_amount_consumer" type="int" />
+	</class>
+
+</hibernate-mapping>

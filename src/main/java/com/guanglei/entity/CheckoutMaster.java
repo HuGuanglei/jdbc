@@ -7,7 +7,7 @@ public class CheckoutMaster {
 	
 	private int id;
 	private String cashierName;
-	private Float totalAmount;
+	private int totalAmount;
 	private String transactionDateTime;
 	private int totalAmountConsumer;
 	
@@ -23,10 +23,10 @@ public class CheckoutMaster {
 	public void setCashierName(String cashierName) {
 		this.cashierName = cashierName;
 	}
-	public Float getTotalAmount() {
+	public int getTotalAmount() {
 		return totalAmount;
 	}
-	public void setTotalAmount(Float totalAmount) {
+	public void setTotalAmount(int totalAmount) {
 		this.totalAmount = totalAmount;
 	}
 	public String getTransactionDateTime() {

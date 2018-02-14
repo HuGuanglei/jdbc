@@ -2,13 +2,13 @@ package com.guanglei.servies;
 
 import java.util.List;
 
-import com.guanglei.DAO.MasterDao;
-import com.guanglei.bean.PosBean;
+import com.guanglei.hibernateDAO.MasterDao2;
+import com.guanglei.bean.PosBean2;
 
 public class PosService {
-	MasterDao d = new MasterDao();
+	MasterDao2 d = new MasterDao2();
 
-	public List<PosBean> getAmountByDate() {
+	public List<PosBean2> getAmountByDate() {
 		return d.findToday();
 	}
 

@@ -27,14 +27,14 @@ public class MasterDao {
 		PreparedStatement ps = null;
 		try {
 			con = JDBCUtils.getConnection();
-			String sql = "insert into master_checkout(cashier_name,total_amount,transaction_date_time"
-					+ ",total_amount_consumer) values(?,?,?,?)";
+			String sql = "insert into master_checkout(transaction_id, cashier_name,total_amount,transaction_date_time"
+					+ ",total_amount_consumer) values(?,?,?,?,?)";
 			ps = con.prepareStatement(sql);
-
-			ps.setString(1, tran.getCashierName());
-			ps.setFloat(2, tran.getTotalAmount());
-			ps.setString(3, tran.getTransactionDateTime());
-			ps.setInt(4, tran.getTotalAmountConsumer());
+			ps.setInt(1, tran.getId());
+			ps.setString(2, tran.getCashierName());
+			ps.setFloat(3, tran.getTotalAmount());
+			ps.setString(4, tran.getTransactionDateTime());
+			ps.setInt(5, tran.getTotalAmountConsumer());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			logger.error("mysql inserting error", e);
@@ -48,7 +48,7 @@ public class MasterDao {
 		PreparedStatement ps = null;
 		try {
 			con = JDBCUtils.getConnection();
-			String sql = "delete from master_checkout where id=?";
+			String sql = "delete from master_checkout where transaction_id=?";
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, id);
 			ps.executeUpdate();
@@ -82,11 +82,11 @@ public class MasterDao {
 		String date1 = dateFormat.format(date);
 		Connection con = null;
 		Statement st = null;
-		Statement st1= null;
+		Statement st1 = null;
 		ResultSet rs = null;
-		ResultSet rs1 =null;
+		ResultSet rs1 = null;
 		try {
-			con = JDBCUtils.getConnection();
+			con = JDBCUtils.getConnection1();
 			st = con.createStatement();
 			String sql = "select transaction_id from master_checkout where transaction_date_time like '" + date1 + "%'";
 			logger.info(sql);
@@ -96,25 +96,26 @@ public class MasterDao {
 				String sql1 = "select product_id,product_amount from checkout_detail where transaction_id ="
 						+ rs.getInt(1) + "";
 				logger.info(sql1);
-				st1= con.createStatement();
+				st1 = con.createStatement();
 				rs1 = st1.executeQuery(sql1);
 				logger.info("detail select success");
-				
-				
-				
+
 				PosBean p = new PosBean();
-				logger.info(rs1.getString(1));
-				p.setProductAmount(rs1.getDouble(2));
-				logger.info("amount set success");
-				p.setProductId(rs1.getString("product_id"));
-				list.add(p);
-				JDBCUtils.free(rs1, st1,null);
+				while (rs1.next()) {
+					
+					p.setProductId(rs1.getString("product_id"));
+					p.setProductAmount(rs1.getDouble("product_amount"));
+					logger.info(String.valueOf(rs1.getDouble("product_amount")));
+					list.add(p);
+
+				}
+				JDBCUtils.free(rs1, st1, null);
 			}
 		} catch (Exception e) {
 			logger.error("sql execution error", e);
-		}finally {
+		} finally {
 			JDBCUtils.free(rs, st, con);
-			
+
 		}
 		return list;
 	}
@@ -135,7 +136,7 @@ public class MasterDao {
 				tran = new CheckoutMaster();
 				tran.setId(rs.getInt(1));
 				tran.setCashierName(rs.getString(2));
-				tran.setTotalAmount(rs.getFloat(3));
+				tran.setTotalAmount(rs.getInt(3));
 				tran.setTransactionDateTime(rs.getString(4));
 				tran.setTotalAmountConsumer(rs.getInt(5));
 			}

@@ -15,14 +15,11 @@ public class PosBean {
 	public double getProductAmount() {
 		return productAmount;
 	}
-	public void setProductAmount(double productAmmount) {
+	public void setProductAmount(double productAmount) {
 		this.productAmount = productAmount;
 	}
 	@Override
 	public String toString() {
 		return "PosBean [productId=" + productId + ", productAmount=" + productAmount + "]";
 	}
-	
-	
-
 }

@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.guanglei.bean.PosBean;
+import com.guanglei.bean.PosBean2;
 import com.guanglei.servies.PosService;
 @Path("list")
 public class PosRest {
@@ -19,8 +20,8 @@ public class PosRest {
 	static final Logger logger = LoggerFactory.getLogger(PosRest.class); 
 	@GET
     @Produces(MediaType.APPLICATION_XML)
-	public List<PosBean> getAmountByDate(){
-		List<PosBean> list = new ArrayList();
+	public List<PosBean2> getAmountByDate(){
+		List<PosBean2> list = new ArrayList();
 		PosService ps= new PosService();
 		try {
 			list=ps.getAmountByDate();
